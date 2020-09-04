@@ -21,6 +21,9 @@ public class EntryService {
         if (entry.getId() != null)  {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parameter ID muss null sein.");
         }
+        if (entry.getCategory() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Kategorie muss gesetzt sein.");
+        }
         return entryRepository.saveAndFlush(entry);
     }
 
