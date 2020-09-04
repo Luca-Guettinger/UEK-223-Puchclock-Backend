@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,6 +25,10 @@ public class Entry {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(nullable = false)
     private LocalDateTime checkOut;
+
+    @ManyToOne
+    @JoinColumn(nullable=false)
+    private Category category;
 
     public Long getId() {
         return id;
@@ -47,5 +52,18 @@ public class Entry {
 
     public void setCheckOut(LocalDateTime checkOut) {
         this.checkOut = checkOut;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @AssertTrue(message = "Endzeit muss nach der Startzeit sein.")
+    public boolean validateTime() {
+        return getCheckIn().isAfter(getCheckOut());
     }
 }

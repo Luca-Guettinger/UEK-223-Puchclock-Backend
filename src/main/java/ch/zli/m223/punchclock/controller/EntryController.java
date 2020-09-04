@@ -4,6 +4,7 @@ import ch.zli.m223.punchclock.domain.Entry;
 import ch.zli.m223.punchclock.service.EntryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/entries")
 public class EntryController {
-    private EntryService entryService;
+    private final EntryService entryService;
 
     public EntryController(EntryService entryService) {
         this.entryService = entryService;
@@ -27,5 +28,15 @@ public class EntryController {
     @ResponseStatus(HttpStatus.CREATED)
     public Entry createEntry(@Valid @RequestBody Entry entry) {
         return entryService.createEntry(entry);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteEntry(@PathVariable Long id) {
+        entryService.deleteEntry(id);
+    }
+
+    @PutMapping("{id}")
+    public void updateObject(@Valid @RequestBody Entry entry) {
+        entryService.updateEntry(entry);
     }
 }
