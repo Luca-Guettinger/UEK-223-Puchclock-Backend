@@ -2,7 +2,6 @@ package ch.zli.m223.punchclock.service;
 
 import ch.zli.m223.punchclock.domain.Entry;
 import ch.zli.m223.punchclock.repository.EntryRepository;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,7 +17,7 @@ public class EntryService {
     }
 
     public Entry createEntry(Entry entry) {
-        if (entry.getId() != null)  {
+        if (entry.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parameter ID muss null sein.");
         }
         if (entry.getCategory() == null) {
@@ -37,7 +36,7 @@ public class EntryService {
 
     public void updateEntry(Entry entry) {
         if (!this.entryRepository.existsById(entry.getId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Kein Eintrag mit der ID " + entry.getId() + " gefunden.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Kein Eintrag mit der ID " + entry.getId() + " gefunden.");
         }
 
         this.entryRepository.saveAndFlush(entry);

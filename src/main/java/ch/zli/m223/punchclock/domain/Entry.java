@@ -27,7 +27,7 @@ public class Entry {
     private LocalDateTime checkOut;
 
     @ManyToOne
-    @JoinColumn(nullable=false)
+    @JoinColumn(nullable = false)
     private Category category;
 
     public Long getId() {

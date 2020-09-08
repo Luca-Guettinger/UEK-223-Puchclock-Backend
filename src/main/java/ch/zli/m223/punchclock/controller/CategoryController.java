@@ -36,7 +36,7 @@ public class CategoryController {
     public void delete(@PathVariable Long id) {
         try {
             categoryService.delete(id);
-        }catch (DataIntegrityViolationException ex) {
+        } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, ex.getLocalizedMessage());
         }
     }
