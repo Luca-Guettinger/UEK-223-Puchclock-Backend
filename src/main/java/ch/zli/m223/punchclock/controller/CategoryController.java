@@ -2,8 +2,10 @@ package ch.zli.m223.punchclock.controller;
 
 import ch.zli.m223.punchclock.domain.Category;
 import ch.zli.m223.punchclock.service.CategoryService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -32,7 +34,11 @@ public class CategoryController {
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        categoryService.delete(id);
+        try {
+            categoryService.delete(id);
+        }catch (DataIntegrityViolationException ex) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, ex.getLocalizedMessage());
+        }
     }
 
     @PutMapping()
