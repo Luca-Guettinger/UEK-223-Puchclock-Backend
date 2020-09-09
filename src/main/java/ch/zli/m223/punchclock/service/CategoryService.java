@@ -32,11 +32,11 @@ public class CategoryService {
         this.categoryRepository.deleteById(id);
     }
 
-    public void update(Category category) {
+    public Category update(Category category) {
         if (!this.categoryRepository.existsById(category.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Keine Kategorie mit der ID " + category.getId() + " gefunden.");
         }
 
-        this.categoryRepository.saveAndFlush(category);
+        return this.categoryRepository.saveAndFlush(category);
     }
 }

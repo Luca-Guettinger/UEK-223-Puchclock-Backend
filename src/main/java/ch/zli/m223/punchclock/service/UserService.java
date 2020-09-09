@@ -1,7 +1,8 @@
-package ch.zli.m223.punchclock.config;
+package ch.zli.m223.punchclock.service;
 
 import ch.zli.m223.punchclock.domain.ApplicationUser;
 import ch.zli.m223.punchclock.repository.ApplicationUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,16 +12,22 @@ import org.springframework.stereotype.Service;
 import static java.util.Collections.emptyList;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserService implements UserDetailsService {
     private final ApplicationUserRepository applicationUserRepository;
 
-    public UserDetailsServiceImpl(ApplicationUserRepository applicationUserRepository) {
+    @Autowired
+    public UserService(ApplicationUserRepository applicationUserRepository) {
         this.applicationUserRepository = applicationUserRepository;
+    }
+
+    public void save(ApplicationUser user) {
+        this.applicationUserRepository.save(user);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
+        ApplicationUser applicationUser = this.applicationUserRepository.findByUsername(username);
+
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }

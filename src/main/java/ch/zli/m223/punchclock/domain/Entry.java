@@ -30,6 +30,10 @@ public class Entry {
     @JoinColumn(nullable = false)
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private ApplicationUser user;
+
     public Long getId() {
         return id;
     }
