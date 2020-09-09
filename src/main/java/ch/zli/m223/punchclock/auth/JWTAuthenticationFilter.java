@@ -1,5 +1,6 @@
-package ch.zli.m223.punchclock.config;
+package ch.zli.m223.punchclock.auth;
 
+import ch.zli.m223.punchclock.config.SecurityConstants;
 import ch.zli.m223.punchclock.domain.ApplicationUser;
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;

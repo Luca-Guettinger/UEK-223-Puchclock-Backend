@@ -1,5 +1,6 @@
-package ch.zli.m223.punchclock.config;
+package ch.zli.m223.punchclock.auth;
 
+import ch.zli.m223.punchclock.config.SecurityConstants;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.authentication.AuthenticationManager;
