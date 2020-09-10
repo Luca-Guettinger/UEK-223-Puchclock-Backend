@@ -6,13 +6,13 @@ import javax.persistence.*;
 public class ApplicationUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(nullable = false)
     private String password;
     @Column(unique = true, nullable = false)
     private String username;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

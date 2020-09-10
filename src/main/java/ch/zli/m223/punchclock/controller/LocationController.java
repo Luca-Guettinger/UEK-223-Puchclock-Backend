@@ -1,6 +1,7 @@
 package ch.zli.m223.punchclock.controller;
 
 
+import ch.zli.m223.punchclock.domain.Category;
 import ch.zli.m223.punchclock.domain.Location;
 import ch.zli.m223.punchclock.service.LocationService;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -40,5 +41,10 @@ public class LocationController {
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, ex.getLocalizedMessage());
         }
+    }
+
+    @PutMapping()
+    public Location update(@Valid @RequestBody Location category) {
+        return  locationService.update(category);
     }
 }

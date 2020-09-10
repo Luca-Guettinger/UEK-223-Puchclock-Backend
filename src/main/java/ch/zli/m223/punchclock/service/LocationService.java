@@ -1,5 +1,6 @@
 package ch.zli.m223.punchclock.service;
 
+import ch.zli.m223.punchclock.domain.Category;
 import ch.zli.m223.punchclock.domain.Location;
 import ch.zli.m223.punchclock.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class LocationService {
         if (location.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parameter ID muss null sein.");
         }
+        return this.locationRepository.saveAndFlush(location);
+    }
+    public Location update(Location location) {
+        if (!this.locationRepository.existsById(location.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Kein Standort mit der ID " + location.getId() + " gefunden.");
+        }
+
         return this.locationRepository.saveAndFlush(location);
     }
 

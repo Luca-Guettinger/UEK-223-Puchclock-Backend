@@ -27,6 +27,12 @@ public class UserController {
 
     @PostMapping
     public ApplicationUser signUp(@RequestBody ApplicationUser user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        return userService.update(user);
+
+    }
+    @PutMapping
+    public ApplicationUser update(@RequestBody ApplicationUser user) {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userService.save(user);
