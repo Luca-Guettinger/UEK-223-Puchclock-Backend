@@ -2,11 +2,14 @@ package ch.zli.m223.punchclock.controller;
 
 import ch.zli.m223.punchclock.domain.ApplicationUser;
 import ch.zli.m223.punchclock.service.UserService;
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 
 @RestController
@@ -22,9 +25,31 @@ public class UserController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @PostMapping("/sign-up")
-    public void signUp(@RequestBody ApplicationUser user) {
+    @PostMapping
+    public ApplicationUser signUp(@RequestBody ApplicationUser user) {
+
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userService.save(user);
+        return userService.save(user);
+
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ApplicationUser> getAll() {
+        return this.userService.findAll();
+    }
+
+    @GetMapping("/me")
+    public ApplicationUser getMyself() {
+        return this.userService.getMyself();
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
+        try {
+            this.userService.delete(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, ex.getLocalizedMessage());
+        }
     }
 }
