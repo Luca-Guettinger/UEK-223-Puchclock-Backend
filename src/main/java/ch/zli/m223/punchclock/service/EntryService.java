@@ -16,6 +16,10 @@ public class EntryService {
         this.entryRepository = entryRepository;
     }
 
+    public long count() {
+        return this.entryRepository.count();
+    }
+
     public Entry createEntry(Entry entry) {
         if (entry.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parameter ID muss null sein.");

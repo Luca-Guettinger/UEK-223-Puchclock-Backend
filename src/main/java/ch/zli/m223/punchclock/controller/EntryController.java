@@ -23,6 +23,12 @@ public class EntryController {
         return entryService.findAll();
     }
 
+    @GetMapping("/count")
+    @ResponseStatus(HttpStatus.OK)
+    public Long countEntries() {
+        return entryService.count();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Entry createEntry(@Valid @RequestBody Entry entry) {
