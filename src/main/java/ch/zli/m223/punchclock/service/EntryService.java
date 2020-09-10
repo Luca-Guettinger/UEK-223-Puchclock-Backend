@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class EntryService {
     private final EntryRepository entryRepository;
-    private UserService userService;
+    private final UserService userService;
 
     public EntryService(EntryRepository entryRepository, UserService userService) {
         this.entryRepository = entryRepository;
@@ -48,11 +48,11 @@ public class EntryService {
         this.entryRepository.deleteById(id);
     }
 
-    public void updateEntry(Entry entry) {
+    public Entry updateEntry(Entry entry) {
         if (!this.entryRepository.existsById(entry.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Kein Eintrag mit der ID " + entry.getId() + " gefunden.");
         }
 
-        this.entryRepository.saveAndFlush(entry);
+        return this.entryRepository.saveAndFlush(entry);
     }
 }

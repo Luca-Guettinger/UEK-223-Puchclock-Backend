@@ -2,6 +2,14 @@
 Dies ist eine Beispielapplikation für das Modul M223. Die hilfe dieser Applikation kann man Zeiteinträge erfassen.
 Die erfassten Zeiteinträge haben eine Kategorie und einen Standort.
 
+## Iniziale Daten
+Es werden beim starten der Applikation folgende Daten angelegt:
+- 3 Kategorien
+- 2 Benutzer
+- 2 Standorte
+- 3 Einträge
+Für genauere Informationen siehe `data.sql`
+
 ## Loslegen
 Folgende Schritte befolgen um loszulegen:
 1. Sicherstellen, dass JDK 12 installiert und in der Umgebungsvariable `path` definiert ist.
