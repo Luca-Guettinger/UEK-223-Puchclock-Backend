@@ -1,7 +1,8 @@
 package ch.zli.m223.punchclock.controller;
 
-import ch.zli.m223.punchclock.domain.Category;
-import ch.zli.m223.punchclock.service.CategoryService;
+
+import ch.zli.m223.punchclock.domain.Location;
+import ch.zli.m223.punchclock.service.LocationService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,38 +12,33 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
-public class CategoryController {
+@RequestMapping("/locations")
+public class LocationController {
 
-    private final CategoryService categoryService;
+    private final LocationService locationService;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    public LocationController(LocationService locationService) {
+        this.locationService = locationService;
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Category> getAll() {
-        return categoryService.findAll();
+    public List<Location> getAll() {
+        return this.locationService.findAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Category create(@Valid @RequestBody Category category) {
-        return categoryService.create(category);
+    public Location create(@Valid @RequestBody Location location) {
+        return this.locationService.create(location);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
         try {
-            categoryService.delete(id);
+            this.locationService.delete(id);
         } catch (DataIntegrityViolationException ex) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, ex.getLocalizedMessage());
         }
-    }
-
-    @PutMapping()
-    public Category update(@Valid @RequestBody Category category) {
-        return  categoryService.update(category);
     }
 }
